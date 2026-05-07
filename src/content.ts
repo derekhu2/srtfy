@@ -22,6 +22,7 @@ function attachOverlay(video: HTMLVideoElement) {
 
   let activeCues: Cue[] = [];
   let subtitlesVisible = true;
+  let offsetMs = 0; // subtitle time offset in milliseconds
 
   // --- Container for CC + X buttons ---
   const btnGroup = document.createElement("div");
@@ -50,6 +51,22 @@ function attachOverlay(video: HTMLVideoElement) {
   subtitleDiv.className = "srt-subtitle-display";
   parent.appendChild(subtitleDiv);
 
+  // --- Offset indicator (shows briefly when offset changes) ---
+  const offsetIndicator = document.createElement("div");
+  offsetIndicator.className = "srt-offset-indicator";
+  parent.appendChild(offsetIndicator);
+
+  let offsetTimeout: ReturnType<typeof setTimeout> | null = null;
+  function showOffset() {
+    const sign = offsetMs >= 0 ? "+" : "";
+    offsetIndicator.textContent = `${sign}${offsetMs}ms`;
+    offsetIndicator.style.display = "";
+    if (offsetTimeout) clearTimeout(offsetTimeout);
+    offsetTimeout = setTimeout(() => {
+      offsetIndicator.style.display = "none";
+    }, 1500);
+  }
+
   function buildDropdown() {
     dropdown.innerHTML = "";
 
@@ -67,6 +84,46 @@ function attachOverlay(video: HTMLVideoElement) {
       });
       dropdown.appendChild(item);
     }
+
+    // --- Offset controls ---
+    const offsetRow = document.createElement("div");
+    offsetRow.className = "srt-dropdown-offset";
+
+    const offsetLabel = document.createElement("span");
+    offsetLabel.textContent = "Offset:";
+    offsetLabel.className = "srt-offset-label";
+
+    const offsetInput = document.createElement("input");
+    offsetInput.type = "text";
+    offsetInput.className = "srt-offset-input";
+    offsetInput.value = String(offsetMs);
+    offsetInput.placeholder = "0";
+    offsetInput.addEventListener("click", (e) => e.stopPropagation());
+    offsetInput.addEventListener("keydown", (e) => {
+      e.stopPropagation();
+      if (e.key === "Enter") {
+        const val = parseInt(offsetInput.value, 10);
+        if (!isNaN(val)) {
+          offsetMs = val;
+          showOffset();
+        }
+        dropdown.style.display = "none";
+      }
+    });
+
+    const msLabel = document.createElement("span");
+    msLabel.textContent = "ms";
+    msLabel.className = "srt-offset-label";
+
+    offsetRow.appendChild(offsetLabel);
+    offsetRow.appendChild(offsetInput);
+    offsetRow.appendChild(msLabel);
+    dropdown.appendChild(offsetRow);
+
+    const hintRow = document.createElement("div");
+    hintRow.className = "srt-dropdown-hint";
+    hintRow.textContent = "Z / X to nudge \u00b1100ms";
+    dropdown.appendChild(hintRow);
 
     const uploadItem = document.createElement("button");
     uploadItem.className = "srt-dropdown-item srt-dropdown-upload";
@@ -136,9 +193,28 @@ function attachOverlay(video: HTMLVideoElement) {
     dropdown.style.display = "none";
   });
 
+  // Z / X keys to nudge offset by ±100ms
+  document.addEventListener("keydown", (e) => {
+    // Don't capture when typing in an input
+    if (
+      e.target instanceof HTMLInputElement ||
+      e.target instanceof HTMLTextAreaElement
+    )
+      return;
+    if (activeCues.length === 0) return;
+
+    if (e.key === "z" || e.key === "Z") {
+      offsetMs -= 100;
+      showOffset();
+    } else if (e.key === "x" || e.key === "X") {
+      offsetMs += 100;
+      showOffset();
+    }
+  });
+
   video.addEventListener("timeupdate", () => {
     if (activeCues.length === 0 || !subtitlesVisible) return;
-    const t = video.currentTime;
+    const t = video.currentTime + offsetMs / 1000;
     const active = activeCues.find((c) => t >= c.start && t <= c.end);
     subtitleDiv.textContent = active ? active.text : "";
   });

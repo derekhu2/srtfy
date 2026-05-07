@@ -98,3 +98,58 @@
 .srt-subtitle-hidden {
   display: none;
 }
+
+/* Offset controls in dropdown */
+.srt-dropdown-offset {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.srt-offset-label {
+  font-size: 12px;
+  color: #aaa;
+  font-family: sans-serif;
+}
+
+.srt-offset-input {
+  width: 60px;
+  padding: 3px 6px;
+  font-size: 12px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+  font-family: monospace;
+  text-align: right;
+}
+
+.srt-offset-input:focus {
+  outline: none;
+  border-color: #6cb4ff;
+}
+
+.srt-dropdown-hint {
+  padding: 4px 12px 8px;
+  font-size: 11px;
+  color: #666;
+  font-family: sans-serif;
+}
+
+/* Offset indicator toast */
+.srt-offset-indicator {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 2147483647;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-family: monospace;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 4px;
+  pointer-events: none;
+  display: none;
+}
