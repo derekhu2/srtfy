@@ -1,99 +1,172 @@
+/* Generic hide class */
+.srt-hidden {
+  display: none !important;
+}
+
 .srt-btn-group {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  z-index: 2147483647;
-  display: flex;
-  gap: 4px;
+  position: absolute !important;
+  top: 8px !important;
+  right: 8px !important;
+  z-index: 2147483647 !important;
+  display: flex !important;
+  gap: 4px !important;
 }
 
 .srt-overlay-btn {
-  padding: 4px 8px;
-  font-size: 12px;
-  font-weight: bold;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
-  cursor: pointer;
-  line-height: 1;
-  font-family: sans-serif;
+  padding: 4px 8px !important;
+  font-size: 12px !important;
+  font-weight: bold !important;
+  color: #fff !important;
+  background: rgba(0, 0, 0, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  line-height: 1 !important;
+  font-family: sans-serif !important;
 }
 
 .srt-overlay-btn:hover {
-  background: rgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.85) !important;
 }
 
 .srt-overlay-btn--active {
-  background: rgba(30, 120, 230, 0.8);
+  background: rgba(30, 120, 230, 0.8) !important;
 }
 
 .srt-overlay-btn--active:hover {
-  background: rgba(30, 120, 230, 0.95);
+  background: rgba(30, 120, 230, 0.95) !important;
 }
 
 .srt-close-btn {
-  font-size: 14px;
-  padding: 2px 6px;
+  font-size: 14px !important;
+  padding: 2px 6px !important;
 }
 
 /* Dropdown */
 .srt-dropdown {
-  position: absolute;
-  top: 32px;
-  right: 8px;
-  z-index: 2147483647;
-  background: rgba(20, 20, 20, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 6px;
-  min-width: 160px;
-  overflow: hidden;
-  font-family: sans-serif;
+  position: fixed !important;
+  z-index: 2147483647 !important;
+  background: rgba(20, 20, 20, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 6px !important;
+  min-width: 160px !important;
+  overflow: hidden !important;
+  font-family: sans-serif !important;
 }
 
 .srt-dropdown-item {
-  display: block;
-  width: 100%;
-  padding: 8px 12px;
-  font-size: 13px;
-  color: #fff;
-  background: none;
-  border: none;
-  text-align: left;
-  cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  display: block !important;
+  width: 100% !important;
+  padding: 8px 12px !important;
+  font-size: 13px !important;
+  color: #fff !important;
+  background: none !important;
+  border: none !important;
+  text-align: left !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
 .srt-dropdown-item:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.15) !important;
 }
 
 .srt-dropdown-upload {
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-  color: #6cb4ff;
+  border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #6cb4ff !important;
 }
 
 /* Subtitle display */
 .srt-subtitle-display {
-  position: fixed;
-  z-index: 2147483647;
-  transform: translateX(-50%);
-  max-width: 60%;
-  padding: 4px 10px;
-  font-size: 18px;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.7);
-  border-radius: 4px;
-  text-align: center;
-  font-family: sans-serif;
-  white-space: pre-line;
-  cursor: pointer;
-  pointer-events: auto;
+  position: fixed !important;
+  z-index: 2147483647 !important;
+  transform: translateX(-50%) !important;
+  max-width: 60% !important;
+  padding: 4px 10px !important;
+  font-size: 18px !important;
+  color: #fff !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  border-radius: 4px !important;
+  text-align: center !important;
+  font-family: sans-serif !important;
+  white-space: pre-line !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
 }
 
-.srt-subtitle-display:empty,
-.srt-subtitle-hidden {
-  display: none;
+.srt-subtitle-display:empty {
+  display: none !important;
+}
+
+/* Offset controls in dropdown */
+.srt-dropdown-offset {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 8px 12px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.srt-offset-label {
+  font-size: 12px !important;
+  color: #aaa !important;
+  font-family: sans-serif !important;
+}
+
+.srt-offset-btn {
+  width: 28px !important;
+  height: 24px !important;
+  font-size: 14px !important;
+  font-weight: bold !important;
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 3px !important;
+  cursor: pointer !important;
+  font-family: sans-serif !important;
+  line-height: 1 !important;
+  padding: 0 !important;
+}
+
+.srt-offset-btn:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+}
+
+.srt-offset-input {
+  width: 60px !important;
+  padding: 3px 6px !important;
+  font-size: 12px !important;
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 3px !important;
+  font-family: monospace !important;
+  text-align: right !important;
+}
+
+.srt-offset-input:focus {
+  outline: none !important;
+  border-color: #6cb4ff !important;
+}
+
+.srt-dropdown-hint {
+  padding: 4px 12px 8px !important;
+  font-size: 11px !important;
+  color: #666 !important;
+  font-family: sans-serif !important;
+}
+
+/* Offset indicator toast */
+.srt-offset-indicator {
+  position: fixed !important;
+  z-index: 2147483647 !important;
+  padding: 4px 8px !important;
+  font-size: 12px !important;
+  font-family: monospace !important;
+  color: #fff !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  border-radius: 4px !important;
+  pointer-events: none !important;
 }
