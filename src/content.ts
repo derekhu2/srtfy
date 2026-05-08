@@ -69,8 +69,9 @@ function attachOverlay(video: HTMLVideoElement) {
 
   let offsetTimeout: ReturnType<typeof setTimeout> | null = null;
   function showOffset() {
-    const sign = offsetMs >= 0 ? "+" : "";
-    offsetIndicator.textContent = `${sign}${offsetMs}ms`;
+    const display = -offsetMs;
+    const sign = display >= 0 ? "+" : "";
+    offsetIndicator.textContent = `${sign}${display}ms`;
     const rect = video.getBoundingClientRect();
     offsetIndicator.style.left = `${rect.left + 8}px`;
     offsetIndicator.style.top = `${rect.top + 8}px`;
@@ -109,7 +110,7 @@ function attachOverlay(video: HTMLVideoElement) {
     minusBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       offsetMs += 100;
-      offsetInput.value = String(offsetMs);
+      offsetInput.value = String(-offsetMs);
       showOffset();
       refreshSubtitle();
     });
@@ -117,7 +118,7 @@ function attachOverlay(video: HTMLVideoElement) {
     const offsetInput = document.createElement("input");
     offsetInput.type = "text";
     offsetInput.className = "srt-offset-input";
-    offsetInput.value = String(offsetMs);
+    offsetInput.value = String(-offsetMs);
     offsetInput.placeholder = "0";
     offsetInput.addEventListener("click", (e) => e.stopPropagation());
     offsetInput.addEventListener("keydown", (e) => {
@@ -125,7 +126,7 @@ function attachOverlay(video: HTMLVideoElement) {
       if (e.key === "Enter") {
         const val = parseInt(offsetInput.value, 10);
         if (!isNaN(val)) {
-          offsetMs = val;
+          offsetMs = -val;
           showOffset();
           refreshSubtitle();
         }
@@ -139,7 +140,7 @@ function attachOverlay(video: HTMLVideoElement) {
     plusBtn.addEventListener("click", (e) => {
       e.stopPropagation();
       offsetMs -= 100;
-      offsetInput.value = String(offsetMs);
+      offsetInput.value = String(-offsetMs);
       showOffset();
       refreshSubtitle();
     });
@@ -257,6 +258,17 @@ function attachOverlay(video: HTMLVideoElement) {
   }
 
   video.addEventListener("timeupdate", refreshSubtitle);
+
+  // Move fixed elements into/out of fullscreen container
+  const fixedEls = [subtitleDiv, dropdown, offsetIndicator];
+  document.addEventListener("fullscreenchange", () => {
+    const fsEl = document.fullscreenElement;
+    if (fsEl && fsEl.contains(video)) {
+      fixedEls.forEach((el) => fsEl.appendChild(el));
+    } else {
+      fixedEls.forEach((el) => document.body.appendChild(el));
+    }
+  });
 }
 
 function scanForVideos() {
